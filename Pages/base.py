@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class BasePage(object):
 
-    def __init__(self, driver, wait=10):
+    def __init__(self, driver, wait=15):
         self.driver = driver
         self.base_url = "http://localhost:8080/"
         self.wait = WebDriverWait(driver, wait)

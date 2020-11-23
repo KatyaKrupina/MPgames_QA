@@ -13,11 +13,6 @@ def pytest_addoption(parser):
         default='Chrome',
         help='Testing browser'
     )
-    parser.addoption(
-        '--url',
-        default='http://localhost:8080/',
-        help='Testing url'
-    )
 
 
 @pytest.fixture
