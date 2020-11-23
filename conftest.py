@@ -67,6 +67,10 @@ def browser(browser_name):
         # options.add_argument('--headless')
         options.add_argument('--ignore-certificate-errors')
         # options.add_experimental_option('w3c', False)
+        options.add_experimental_option("prefs", {
+            "download.default_directory": "/tmp",
+            'profile.default_content_setting_values.automatic_downloads': 2,
+        })
         caps['loggingPrefs'] = {'performance': 'ALL', 'browser': 'ALL'}
         driver = webdriver.Chrome(options=options, desired_capabilities=caps)
         driver.implicitly_wait(5)
