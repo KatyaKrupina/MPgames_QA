@@ -1,5 +1,3 @@
-from time import sleep
-
 import allure
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.alert import Alert
@@ -34,21 +32,28 @@ class LoginPage(BasePage):
             self.find_element(locator=self.password_field).click()
             self.find_element(locator=self.password_input).send_keys(password)
 
-    def login(self, username, password):
-        with allure.step("Logging to admin page"):
-            self._set_username_(username)
-            self._set_password_(password)
+    def _accept_all_alerts(self):
+        with allure.step("Accepting alerts"):
+            Alert(self.driver).accept()
+            self.wait_for_alert()
+            Alert(self.driver).accept()
+
+    def _click_sign_in_button(self):
+        with allure.step("Waiting for sign in button and click"):
             button = self.find_element(locator=self.submit_btn)
             hover = ActionChains(self.driver).move_to_element(button)
             hover.perform()
             self.wait_for_element(self.sign_in_btn).click()
-            Alert(self.driver).accept()
-            self.wait_for_alert()
-            Alert(self.driver).accept()
-            return ClientsPage(self.driver)
 
     def check_welcome_login_text(self):
-        text = self.get_text_in_element(self.welcome)
-        assert text == 'Welcome to Propeller Championship!'
+        with allure.step("Checking title of login page"):
+            text = self.get_text_in_element(self.welcome)
+            assert text == 'Welcome to Propeller Championship!'
 
-
+    def login(self, username, password):
+        with allure.step("Login"):
+            self._set_username_(username)
+            self._set_password_(password)
+            self._click_sign_in_button()
+            self._accept_all_alerts()
+            return ClientsPage(self.driver)

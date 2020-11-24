@@ -36,13 +36,6 @@ def clients_page(browser):
     return page
 
 
-# @pytest.fixture
-# def profile_page(browser):
-#     page = ProfilePage(browser)
-#     page.go_to()
-#     return page
-
-
 @pytest.fixture
 def browser_name(request):
     return request.config.getoption('--browser')
@@ -59,9 +52,8 @@ def browser(browser_name):
     if browser_name == 'Chrome':
         caps = DesiredCapabilities.CHROME
         options = ChromeOptions()
-        # options.add_argument('--headless')
+        options.add_argument('--headless')
         options.add_argument('--ignore-certificate-errors')
-        # options.add_experimental_option('w3c', False)
         options.add_experimental_option("prefs", {
             "download.default_directory": "/tmp",
             'profile.default_content_setting_values.automatic_downloads': 2,
