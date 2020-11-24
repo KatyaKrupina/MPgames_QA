@@ -3,6 +3,7 @@ from time import sleep
 
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 from Pages.base import BasePage
 
@@ -20,12 +21,6 @@ class ClientsPage(BasePage):
     download_btn = (By.CSS_SELECTOR, '[class ="btn btn-outline-info"')
 
     slider = (By.CSS_SELECTOR, '[class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"]')
-    #
-    # login_input = (By.ID, 'loginInput')
-    # password_input = (By.ID, 'passwordInput')
-    #
-    # submit_btn = (By.XPATH, '//*[@id="registrationContainer"]/div/div[3]/button[2]')
-    # sign_in_btn = (By.XPATH, '//*[@id="registrationContainer"]/div/div[3]/div/img')
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -55,10 +50,11 @@ class ClientsPage(BasePage):
     def choose_client(self, client_name):
         client = '//*[contains(text(), ' + "'" + client_name + "'" + ')]'
         self.wait_for_element((By.XPATH, client)).click()
-        # self.driver.find_element_by_xpath(client).click()
 
     def check_client(self, name, info):
-        assert self.get_text_in_element(self.client_name) == name
+        self.wait_for_element(self.client_name)
+        client_name = self.get_text_in_element(self.client_name)
+        assert client_name == name
         assert self.get_text_in_element(self.client_intro) == info
 
     def download_info_file(self):
@@ -89,3 +85,23 @@ class ClientsPage(BasePage):
         slider = self.find_element(self.slider)
         move.click_and_hold(slider).move_by_offset(x, y).release().perform()
 
+    def scroll_textarea(self):
+        textarea = self.wait_for_element(self.client_info)
+        textarea.send_keys(Keys.CONTROL, Keys.END)
+
+    def check_move_to_save_button_is_disabled(self):
+        button = self.find_element((By.XPATH, "//*[contains(text(), 'Move to saved')]"))
+        assert button.is_enabled() is False
+
+    def move_article_to_saved(self):
+        self.wait_for_element((By.XPATH, "//*[contains(text(), 'Move to saved')]")).click()
+        articles = self.wait_for_element((By.XPATH, "//*[contains(text(), 'Saved articles')]"))
+        assert articles.is_displayed() is True
+
+    def remove_article_from_saved(self):
+        self.wait_for_element((By.XPATH, "//*[contains(text(), 'Removed from saved')]")).click()
+
+    def get_saved_articles_qty(self, saved_article_block_index):
+        saved_article_block = self.find_elements((By.CSS_SELECTOR, '[class="right-sub-tree"'))
+        advertisers = saved_article_block[saved_article_block_index].find_elements(By.CLASS_NAME, "sub-tree-element")
+        return len(advertisers)
