@@ -8,6 +8,7 @@ from .clients_page import ClientsPage
 
 
 class LoginPage(BasePage):
+
     login_field = (By.CSS_SELECTOR, '[onclick="startInputLogin()"]')
     password_field = (By.CSS_SELECTOR, '[onclick="startInputPassword()"]')
 
@@ -22,14 +23,13 @@ class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
-    # todo locator
     def _set_username_(self, name):
-        with allure.step("Enter name {}".format(name)):
+        with allure.step(f"Enter name {name}"):
             self.find_element(locator=self.login_field).click()
             self.find_element(locator=self.login_input).send_keys(name)
 
     def _set_password_(self, password):
-        with allure.step("Enter password {}".format(password)):
+        with allure.step(f"Enter password {password}"):
             self.find_element(locator=self.password_field).click()
             self.find_element(locator=self.password_input).send_keys(password)
 

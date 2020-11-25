@@ -1,5 +1,3 @@
-from time import sleep
-
 import allure
 import pytest
 from selenium import webdriver
@@ -23,12 +21,6 @@ def login_page(browser):
     page = LoginPage(browser)
     page.go_to()
     return page
-
-
-#todo убрать
-# @pytest.fixture
-# def main_page(login_page):
-#     return login_page.login('test', 'test')
 
 
 @pytest.fixture

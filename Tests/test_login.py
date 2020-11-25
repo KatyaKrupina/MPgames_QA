@@ -8,6 +8,7 @@ incorrect_data_for_login = [('test1', 'test'),
 
 @allure.feature('Login')
 class TestLogin:
+
     @allure.title('Check login title')
     def test_login_title(self, browser, login_page):
         # тест падает из-за опечатки в заголовке

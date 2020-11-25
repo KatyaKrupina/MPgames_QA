@@ -8,15 +8,15 @@ from Test_data.top_clients_data import TOP_CLIENTS_DATA
 
 @allure.feature('Advertisers Info')
 class TestAdvertisers:
+
     @allure.title('Check Advertisers quantity is correct')
     def test_advertisers_qty(self, clients_page):
         advertisers = clients_page.get_advertisers_qty()
         assert advertisers == 2
 
-    @allure.title('Check Advertisers quantity is correct')
+    @allure.title('Check Advertisers details are correct')
     @pytest.mark.parametrize('name, info', ADV_DATA)
     def test_advertiser_details(self, clients_page, name, info):
-        # часть тестов падает из-за несоответствия текста в скачанном файле
         with allure.step('Choosing Advertiser'):
             clients_page.choose_section('Advertisers')
             clients_page.choose_client(name)
@@ -40,7 +40,6 @@ class TestPublishers:
     @allure.title('Check Publishers details are correct')
     @pytest.mark.parametrize('name, info', PUB_DATA)
     def test_publisher_details(self, clients_page, name, info):
-        # часть тестов падает из-за несоответствия текста в скачанном файле
         with allure.step('Choosing Publisher'):
             clients_page.choose_section('Publishers')
             clients_page.choose_client(name)
@@ -56,6 +55,7 @@ class TestPublishers:
 
 @allure.feature('Top Level Clients Info')
 class TestTopLevelClients:
+
     @allure.title('Check Top level clients quantity is correct')
     def test_top_level_clients_qty(self, clients_page):
         top_level_clients = clients_page.get_top_level_clients_qty()
@@ -64,7 +64,6 @@ class TestTopLevelClients:
     @allure.title('Check Top level clients details are correct')
     @pytest.mark.parametrize('name, info', TOP_CLIENTS_DATA)
     def test_top_level_client_details(self, clients_page, name, info):
-        # часть тестов падает из-за несоответствия текста в скачанном файле
         with allure.step('Choosing Top level client'):
             clients_page.choose_section('Top level clients')
             clients_page.choose_client(name)
@@ -80,6 +79,7 @@ class TestTopLevelClients:
 
 @allure.feature('Saved Articles')
 class TestSavedArticles:
+
     @allure.title('Check moving to saved articles is disabled without scrolling')
     def test_move_to_save_button_default(self, clients_page):
         with allure.step('Choosing article without scrolling info'):
@@ -149,7 +149,6 @@ class TestSavedArticles:
 
     @allure.title('Check saved articles after refresh')
     def test_save_article_after_refresh(self, clients_page):
-        # тест падает, так как статьи не сохраняются после обновления
         with allure.step('Move article to saved'):
             clients_page.choose_section('Publishers')
             clients_page.choose_client('Youtube')
