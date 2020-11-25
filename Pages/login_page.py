@@ -22,6 +22,7 @@ class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
+    # todo locator
     def _set_username_(self, name):
         with allure.step("Enter name {}".format(name)):
             self.find_element(locator=self.login_field).click()

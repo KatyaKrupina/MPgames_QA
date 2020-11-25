@@ -44,6 +44,7 @@ class BasePage(object):
                               attachment_type=allure.attachment_type.PNG)
                 raise AssertionError(f"Element {locator} is not clickable")
 
+    # todo убрать
     def find_text_in_element(self, locator, text):
         with allure.step("Finding text {} in locator {}".format(text, locator)):
             try:
@@ -78,7 +79,7 @@ class BasePage(object):
                 raise AssertionError(f"Can't get title")
 
     def get_text_in_element(self, locator):
-        with allure.step("Getting text"):
+        with allure.step(f"Getting text in element {locator}"):
             try:
                 a = self.wait.until(EC.presence_of_element_located(locator)).text
                 return a
@@ -88,6 +89,7 @@ class BasePage(object):
                               attachment_type=allure.attachment_type.PNG)
                 raise AssertionError(f"Can't get text in element {locator}")
 
+    # todo убрать
     def switch_to_current_tab(self):
         with allure.step("Switching to current browser tab"):
             self.driver.switch_to.window(self.driver.window_handles[len(self.driver.window_handles)-1])

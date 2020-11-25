@@ -1,3 +1,5 @@
+from time import sleep
+
 import allure
 import pytest
 from selenium import webdriver
@@ -5,6 +7,7 @@ from selenium.webdriver import ChromeOptions, FirefoxOptions, DesiredCapabilitie
 
 from Pages.login_page import LoginPage
 from Pages.clients_page import ClientsPage
+from Pages.profile_page import ProfilePage
 
 
 def pytest_addoption(parser):
@@ -22,9 +25,10 @@ def login_page(browser):
     return page
 
 
-@pytest.fixture
-def main_page(login_page):
-    return login_page.login('test', 'test')
+#todo убрать
+# @pytest.fixture
+# def main_page(login_page):
+#     return login_page.login('test', 'test')
 
 
 @pytest.fixture
@@ -33,6 +37,13 @@ def clients_page(browser):
     page.go_to()
     browser.add_cookie({"name": "secret", "value": "IAmSuperSeleniumMaster"})
     browser.refresh()
+    return page
+
+
+@pytest.fixture
+def profile_page(clients_page, browser):
+    page = ProfilePage(browser)
+    page.show_profile()
     return page
 
 

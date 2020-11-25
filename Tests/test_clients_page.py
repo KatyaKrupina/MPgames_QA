@@ -1,9 +1,9 @@
 import allure
 import pytest
 
-from Clients_info.advertisers_data import ADV_DATA
-from Clients_info.publishers_data import PUB_DATA
-from Clients_info.top_clients_data import TOP_CLIENTS_DATA
+from Test_data.advertisers_data import ADV_DATA
+from Test_data.publishers_data import PUB_DATA
+from Test_data.top_clients_data import TOP_CLIENTS_DATA
 
 
 @allure.feature('Advertisers Info')
